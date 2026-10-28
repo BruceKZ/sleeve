@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sleeve · 封面之间</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo"></span>Sleeve <small>封面之间</small></div>
+    <div class="top-actions">
+      <button id="undoBtn" class="ghost" title="撤销 (⌘Z)">撤销</button>
+      <button id="exportBtn" class="primary">导出壁纸</button>
+    </div>
+  </header>
+
+  <main class="layout" data-tab="search">
+    <!-- 搜索 -->
+    <section class="panel" id="panel-search">
+      <form id="searchForm" class="search">
+        <input id="q" type="search" placeholder="歌手名 / 专辑名，如 陈奕迅 H3M" autocomplete="off">
+        <button class="primary" type="submit">搜索</button>
+      </form>
+      <div class="search-opts">
+        <select id="attr" title="搜索范围">
+          <option value="">全部</option>
+          <option value="artistTerm">按歌手</option>
+          <option value="albumTerm">按专辑</option>
+        </select>
+        <select id="store" title="曲库地区">
+          <option value="hk,us">港区 + 美区</option>
+          <option value="hk,tw,us,jp">四区合并（慢一点）</option>
+          <option value="cn">中国大陆</option>
+          <option value="tw">台湾</option>
+          <option value="jp">日本</option>
+          <option value="kr">韩国</option>
+          <option value="us">美国</option>
+          <option value="gb">英国</option>
+        </select>
+        <label class="upload ghost-btn">上传本地图片<input id="upload" type="file" accept="image/*" multiple hidden></label>
+      </div>
+      <div id="status" class="status"></div>
+      <div id="results" class="results"></div>
+    </section>
+
+    <!-- 排列 -->
+    <section class="panel" id="panel-board">
+      <div class="panel-head">
+        <h2>排列 <span id="count" class="muted"></span></h2>
+        <div class="row">
+          <button id="shuffleBtn" class="ghost">随机</button>
+          <button id="reverseBtn" class="ghost">倒序</button>
+          <button id="clearBtn" class="ghost danger">清空</button>
+        </div>
+      </div>
+      <p class="hint">拖动调整顺序，顺序与壁纸格子一一对应。</p>
+      <div id="board" class="board"></div>
+
+      <details class="settings" open>
+        <summary>版式设置</summary>
+        <div class="grid2">
+          <label>设备
+            <select id="device"></select>
+          </label>
+          <label>比例
+            <select id="ratio"></select>
+          </label>
+          <label class="sizes">尺寸
+            <span><input id="w" type="number" min="200" max="8000"> × <input id="h" type="number" min="200" max="8000">
+            <button id="rotateBtn" class="ghost small" type="button" title="横竖切换">⟲</button></span>
+          </label>
+          <label>每行 <output id="colsOut"></output><input id="cols" type="range" min="1" max="12"></label>
+          <label>间距 <output id="gapOut"></output><input id="gap" type="range" min="0" max="120"></label>
+          <label>边距 <output id="padOut"></output><input id="pad" type="range" min="0" max="400"></label>
+          <label>圆角 <output id="radiusOut"></output><input id="radius" type="range" min="0" max="50"></label>
+          <label>垂直偏移 <output id="offsetOut"></output><input id="offset" type="range" min="-50" max="50"></label>
+          <label>背景色 <input id="bg" type="color"></label>
+          <label class="check"><input id="repeat" type="checkbox"> 封面不够时循环铺满</label>
+          <label class="check"><input id="overlay" type="checkbox"> 预览显示系统界面</label>
+        </div>
+      </details>
+    </section>
+
+    <!-- 预览 -->
+    <section class="panel" id="panel-preview">
+      <div class="stage">
+        <div id="frame" class="frame phone">
+          <div class="screen">
+            <canvas id="preview"></canvas>
+            <div id="sysui" class="sysui"></div>
+          </div>
+        </div>
+      </div>
+      <p id="previewMeta" class="hint center"></p>
+    </section>
+  </main>
+
+  <nav class="tabs">
+    <button data-tab="search" class="on">搜索</button>
+    <button data-tab="board">排列</button>
+    <button data-tab="preview">预览</button>
+  </nav>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
